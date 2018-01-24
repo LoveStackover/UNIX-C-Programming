@@ -6,7 +6,8 @@ This repository aims to track learning process in relation to programming in UNI
 ### 2. Contents
 
 - File I/O 
-  - 3_1.c 3_2.c 3_3.c
+  - 3_1.c 3_2.c
+- STANDARD I/O
 
 
 
