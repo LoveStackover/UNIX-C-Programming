@@ -3,15 +3,17 @@
 #include <stdlib.h>
 #include <err.h>
 #include <unistd.h>
+#include <string.h>
 int main(int argc,char ** argv)
 {
     time_t t;
     int c;
     struct tm * tmp[2];
     char buf2[64];
+    char str[64]="TZ=";
     char * cp=NULL;
     time(&t);
-    while ((c = getopt(argc, argv, "t:")) != EOF)
+    while ((c = getopt(argc, argv, "t:")) != -1)
     {
 	    switch(c)
 	    {
@@ -19,18 +21,21 @@ int main(int argc,char ** argv)
 			cp=optarg;
 			break;
 		    case '?':
-			errx(1,"error in getopt\n");
+			exit(-1);
 			
 	    }
 
 
     }
-    if(cp != NULL )
-    	if(putenv(cp) != 0)
+    if(cp != NULL)
+    {
+    	strcat(str,cp);
+    	if(putenv(str) != 0)
     	{
 		perror("putenv:");
 		exit(-1);
-    	}
+	}
+    }
     printf("TZ:%s\n",cp);
     tmp[1]= gmtime(&t);
     tmp[0]= localtime(&t);
